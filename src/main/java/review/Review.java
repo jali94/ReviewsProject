@@ -1,12 +1,42 @@
 package review;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
 public class Review {
-	long id;
-	String title;
-	String imageUrl;
-	String reviewCategory;
-	String content;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
+	private String title;
+	private String imageUrl;
+	private String content;
+	
+	@ManyToOne 
+	private Category category;
+	
+	//spring jpa requires no arg constructor
+	protected Review() {
+		
+	}
+	
+	
+	
+	public Review(String title, String imageUrl, String content,
+			Category category) {
+		this.title = title;
+		this.imageUrl = imageUrl;
+		this.content = content;
+		this.category = category;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -19,23 +49,12 @@ public class Review {
 		return imageUrl;
 	}
 	
-	public String getReviewCategory() {
-		return reviewCategory;
-	}
-	
 	public String getContent() {
 		return content;
 	}
-
-	public Review(long id, String title, String imageUrl, String reviewCategory, String content) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.imageUrl = imageUrl;
-		this.reviewCategory = reviewCategory;
-		this.content = content;
+	
+	public Category getCategory() {
+		return category;
 	}
-
-
 
 }
